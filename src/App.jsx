@@ -1,68 +1,49 @@
-import { useEffect, useState } from 'react';
-import './App.css'
-import Notes from './components/notes';
-import InputForm from './components/InputForm';
-import { addTodoListToLocalStorage, getTodoListFromLocalStorage } from '#v1/helpers';
+import { useEffect, useState } from "react";
+import "./App.css";
+import Notes from "./components/Notes";
+import InputForm from "./components/InputForm";
+import {
+  addTodoListToLocalStorage,
+  getTodoListFromLocalStorage,
+} from "#v1/helpers";
 
 function App() {
+  const [notes, setNotes] = useState([]);
 
+  const [submittedValue, setSubmittedValue] = useState("");
 
-  // const testNotes = [
-  //   {
-  //     id:1,
-  //     text:'task1'
-  //   },
-  //   {
-  //     id:2,
-  //     text:'task2'
-  //   },
-  //   {
-  //     id:3,
-  //     text:'task3'
-  //   }
-  // ];
-  const [notes,setNotes] = useState([])
-
-  const [submittedValue, setSubmittedValue] = useState('');
-
-  useEffect(()=>{
+  useEffect(() => {
     // build Notes array from localstorage
     const storedNotes = getTodoListFromLocalStorage();
-    debugger
-    if(storedNotes){
+    if (storedNotes) {
       setNotes(storedNotes);
     }
-  },[])
-  
-  useEffect(()=>{
-    if(!submittedValue)
-      return;
+  }, []);
+
+  useEffect(() => {
+    if (!submittedValue) return;
     const id = notes.length + 1;
     const newNote = {
       id,
-      text: submittedValue
-    }
-    setNotes((prev)=>[...prev,newNote])
-  },[submittedValue])
-
-  useEffect(()=>{
-    addTodoListToLocalStorage(notes)
-  },[notes])
-
-
-
+      text: submittedValue,
+    };
+    setNotes((prev) => [...prev, newNote]);
+  }, [submittedValue]);
 
   return (
-    <>
-      <div id="notes-container">
-        <InputForm  setSubmittedValue={setSubmittedValue} />
-        <div id="notes-floating-container">
-        <Notes notesList={notes} setNotes={setNotes}/>
-        </div>
-        
+    <div className="parent--container">
+      <div className="input--container">
+          <InputForm setSubmittedValue={setSubmittedValue} />
       </div>
-    </>
-  )
+      <div
+        id="container"
+      >
+        <div id="notes-floating-container">
+          <Notes notes={notes} setNotes={setNotes} />
+        </div>
+      </div>
+    </div>
+  );
 }
 
-export default App
+export default App;
