@@ -1,0 +1,14 @@
+.note-item{
+    width: 200px;
+    padding: 10px;
+    margin: 5px;
+    background-color: lightyellow;
+    border: 2px solid black;
+    cursor: grab;
+    position: relative;
+    color: black;
+}
+
+.note--pin{
+    right: 0;
+}
