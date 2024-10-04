@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { createRef, useEffect, useRef } from "react";
-import Note from "./note";
+import Note from "#v1/components/Note.jsx";
 import {
   addTodoListToLocalStorage,
   getTodoListFromLocalStorage,
@@ -21,7 +21,7 @@ export default function Notes({ notes = [], setNotes }) {
         return { ...note, position };
       }
     });
-    addTodoListToLocalStorage(notes);
+    addTodoListToLocalStorage(updatedNotes);
     setNotes(updatedNotes);
   }, [notes.length]);
 
@@ -38,7 +38,6 @@ export default function Notes({ notes = [], setNotes }) {
   };
 
   const handleDragStart = (note, e) => {
-    console.log('drag started')
     const { id } = note;
     const noteRef = noteRefs.current[id].current;
     const rect = noteRef.getBoundingClientRect();
@@ -48,7 +47,6 @@ export default function Notes({ notes = [], setNotes }) {
     const startPos = note.position;
 
     const handleMouseMove = (e) => {
-      console.log('handleMouseMove')
       const newX = e.clientX - offsetX;
       const newY = e.clientY - offsetY;
 
@@ -57,7 +55,6 @@ export default function Notes({ notes = [], setNotes }) {
     };
 
     const handleMouseUp = () => {
-      console.log('handleMouseUp')
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseup", handleMouseUp);
 
@@ -121,6 +118,7 @@ export default function Notes({ notes = [], setNotes }) {
             initialPos={note?.position}
             content={note.text}
             notes={notes}
+            note={note}
             setNotes={setNotes}
             onMouseDown={(e) => {
               handleDragStart(note, e);

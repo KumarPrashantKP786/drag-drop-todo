@@ -3,7 +3,6 @@ import "./App.css";
 import Notes from "./components/Notes";
 import InputForm from "./components/InputForm";
 import {
-  addTodoListToLocalStorage,
   getTodoListFromLocalStorage,
 } from "#v1/helpers";
 
@@ -22,7 +21,7 @@ function App() {
 
   useEffect(() => {
     if (!submittedValue) return;
-    const id = notes.length + 1;
+    const id = crypto.getRandomValues(new Uint32Array(1))[0];
     const newNote = {
       id,
       text: submittedValue,
